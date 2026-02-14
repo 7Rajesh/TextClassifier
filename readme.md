@@ -25,10 +25,11 @@ This project requires `scikit-learn` for the machine learning models. Install it
 
 ```bash
 pip install scikit-learn
-Clone the Repository
+'''
+### 2.Clone the Repository
 "git clone https://github.com/7Rajesh/TextClassifier.git"
 "cd TextClassifier"
-
+'''
 Usage
 Run the classifier from the project root:
 "python src/text_classifier.py"
