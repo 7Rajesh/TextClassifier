@@ -7,8 +7,8 @@ from sklearn.svm import LinearSVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
-#easy config
-# Get the parent directory (project root)
+
+#get the parent directory (project root)
 current_dir = Path(__file__).parent
 project_root = current_dir.parent
 data_dir = project_root / "dataset"
@@ -20,7 +20,7 @@ labels = []
 
 print("Reading files...")
 
-#load the data manually
+#loading data
 for label, folder_name in enumerate(folders):
     path = os.path.join(data_dir, folder_name)
     

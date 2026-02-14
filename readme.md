@@ -9,3 +9,14 @@ Project that classifies text documents into two categories: Politics and Sports 
   - Support Vector Machine (SVM)
   - Random Forest
 - Easy to extend for additional categories
+
+## Installation
+# Prerequisites
+Python 3.7 or higher
+pip (Python package manager)
+
+# Clone the Repository
+git clone https://github.com/7Rajesh/TextClassifier.git
+cd TextClassifier
+
+# 
