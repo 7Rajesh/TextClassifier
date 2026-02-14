@@ -15,6 +15,16 @@ Prerequisites
 Python 3.7 or higher
 pip (Python package manager)
 
+
+## How to Run
+
+Follow these steps to set up and execute the project.
+
+### 1. Install Dependencies
+This project requires `scikit-learn` for the machine learning models. Install it via pip:
+
+```bash
+pip install scikit-learn
 Clone the Repository
 "git clone https://github.com/7Rajesh/TextClassifier.git"
 "cd TextClassifier"
