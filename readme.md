@@ -25,11 +25,20 @@ This project requires `scikit-learn` for the machine learning models. Install it
 
 ```bash
 pip install scikit-learn
-'''
+```
 ### 2.Clone the Repository
-"git clone https://github.com/7Rajesh/TextClassifier.git"
-"cd TextClassifier"
-'''
-Usage
+```bash
+git clone https://github.com/7Rajesh/TextClassifier.git
+cd TextClassifier
+```
+## 3.How To Run
 Run the classifier from the project root:
-"python src/text_classifier.py"
+IF No Text input file is provided it will show result for default sample text
+```bash
+python src/main.py
+```
+
+IF input file is provided
+```bash
+python src/main.py sample.txt
+```
