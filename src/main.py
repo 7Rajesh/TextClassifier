@@ -40,15 +40,15 @@ for label, folder_name in enumerate(folders):
 
 print(f"Loaded {len(docs)} files total.")
 
-#using TF-IDF because it handles common words better than simple counts
-#ngrams=(1,2) means we look at single words AND pairs (like "white house" or "match point")
+#using TF-IDF
+#ngrams=(1,2) means we look at single words and pairs 
 vectorizer = TfidfVectorizer(stop_words='english', ngram_range=(1, 2))
 X = vectorizer.fit_transform(docs)
 
 #80-20 split is standard
 x_train, x_test, y_train, y_test = train_test_split(X, labels, test_size=0.2, random_state=42)
 
-#let's compare these three
+#ml classification models to be used
 classifiers = {
     "Naive Bayes": MultinomialNB(),
     "SVM": LinearSVC(dual='auto'), #SVM is usually great for text
