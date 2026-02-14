@@ -36,9 +36,15 @@ Run the classifier from the project root:
 IF No Text input file is provided it will show result for default sample text
 ```bash
 python src/main.py
+or
+python3 src/main.py
+
 ```
 
+OR
 IF input file is provided
 ```bash
 python src/main.py sample.txt
+or
+python3 src/main.py sample.txt
 ```
