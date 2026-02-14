@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
@@ -7,7 +8,11 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 #easy config
-data_dir = "./dataset"
+# Get the parent directory (project root)
+current_dir = Path(__file__).parent
+project_root = current_dir.parent
+data_dir = project_root / "dataset"
+
 folders = ["politics", "sports"]
 
 docs = []
