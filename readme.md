@@ -11,14 +11,14 @@ Project that classifies text documents into two categories: Politics and Sports 
 - Easy to extend for additional categories
 
 ## Installation
-#Prerequisites
+Prerequisites
 Python 3.7 or higher
 pip (Python package manager)
 
-#Clone the Repository
+Clone the Repository
 "git clone https://github.com/7Rajesh/TextClassifier.git"
 "cd TextClassifier"
 
-#Usage
+Usage
 Run the classifier from the project root:
 "python src/text_classifier.py"
