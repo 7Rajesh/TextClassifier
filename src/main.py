@@ -7,69 +7,90 @@ from sklearn.svm import LinearSVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
-
-#get the parent directory (project root)
+# --- 1. Setup & Data Loading ---
 current_dir = Path(__file__).parent
 project_root = current_dir.parent
 data_dir = project_root / "dataset"
 
 folders = ["politics", "sports"]
-
 docs = []
 labels = []
 
 print("Reading files...")
 
-#loading data
 for label, folder_name in enumerate(folders):
-    path = os.path.join(data_dir, folder_name)
+    path = data_dir / folder_name  # Using Pathlib for cleaner paths
     
-    #quick check to avoid crashing if folder is missing
-    if not os.path.exists(path):
-        print(f"Skipping {folder_name}, path not found.")
+    if not path.exists():
+        print(f"Skipping {folder_name}, path not found at {path}")
         continue
 
     for file in os.listdir(path):
         if file.endswith(".txt"):
             try:
-                with open(os.path.join(path, file), 'r', encoding='utf-8', errors='ignore') as f:
+                with open(path / file, 'r', encoding='utf-8', errors='ignore') as f:
                     docs.append(f.read())
                     labels.append(label)
-            except:
-                pass #just skip bad files
+            except Exception as e:
+                print(f"Error reading {file}: {e}")
+
+if len(docs) == 0:
+    print("Error: No documents loaded. Please check your dataset directory structure.")
+    exit()
 
 print(f"Loaded {len(docs)} files total.")
 
-#using TF-IDF
-#ngrams=(1,2) means we look at single words and pairs 
+# --- 2. Vectorization & Splitting ---
+# Tfidf: ngrams=(1,2) captures "ball" and "tennis ball"
 vectorizer = TfidfVectorizer(stop_words='english', ngram_range=(1, 2))
 X = vectorizer.fit_transform(docs)
 
-#80-20 split is standard
 x_train, x_test, y_train, y_test = train_test_split(X, labels, test_size=0.2, random_state=42)
 
-#ml classification models to be used
+# --- 3. Model Definition ---
 classifiers = {
     "Naive Bayes": MultinomialNB(),
-    "SVM": LinearSVC(dual='auto'), #SVM is usually great for text
-    "Random Forest": RandomForestClassifier(n_estimators=100)
+    "SVM": LinearSVC(dual='auto', random_state=42),
+    "Random Forest": RandomForestClassifier(n_estimators=100, random_state=42)
 }
 
-print("\nResults:")
+# --- 4. Training & Accuracy Comparison ---
+print("\n" + "="*30)
+print("MODEL ACCURACY COMPARISON")
+print("="*30)
+
+# Dictionary to store accuracy scores for potential ranking later
+model_scores = {}
+
 for name, clf in classifiers.items():
     clf.fit(x_train, y_train)
     preds = clf.predict(x_test)
     acc = accuracy_score(y_test, preds)
-    print(f"{name}: {acc*100:.2f}% accuracy")
+    model_scores[name] = acc
+    print(f"{name:<15}: {acc*100:.2f}%")
 
-#simple test function to try it out
+# --- 5. Prediction on Sample Text for EACH Model ---
 def predict_text(text, model):
     vec = vectorizer.transform([text])
     pred = model.predict(vec)
     return folders[pred[0]]
 
-#Example usage with the last trained model (Random Forest)
-print("\nQuick Test:")
-sample = "The senator voted against the new bill yesterday."
-print(f"Text: {sample}")
-print(f"Prediction: {predict_text(sample, classifiers['Random Forest'])}")
+#Test Samples
+test_politics = "The committee debated the new housing regulations for several hours before reaching a consensus. Critics argue the law doesn't go far enough to address the crisis."
+
+test_sports = "After a slow start to the season, the team rallied to win five consecutive games. The captain's performance in the playoffs was instrumental in securing the trophy."
+
+#Run Predictions
+print("\n" + "="*30)
+print("FINAL TEST RESULTS")
+print("="*30)
+
+print(f"Text: {test_politics}")
+for name, clf in classifiers.items():
+    print(f"{name:<15}: {predict_text(test_politics, clf)}")
+
+print("-" * 30)
+
+print(f"Text: {test_sports}")
+for name, clf in classifiers.items():
+    print(f"{name:<15}: {predict_text(test_sports, clf)}")
